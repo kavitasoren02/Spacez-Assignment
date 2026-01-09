@@ -1,65 +1,231 @@
-import Image from "next/image";
+"use client"
+
+import { useEffect, useRef, useState } from "react"
+import Card, { Cards } from "@/components/Card"
+import Button from "@/components/ui/Button"
+import Tabs, { TabItem } from "@/components/ui/Tabs"
+import Wrapper from "@/components/ui/Wrapper"
+import Giftcard from "@/components/Giftcard"
 
 export default function Home() {
+  const [isScrolled, setIsScrolled] = useState(false)
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  const tabs: TabItem[] = [
+    { title: "Coupons", targetId: "coupons" },
+    { title: "Giftcards", targetId: "giftcards" },
+    { title: "Payment Offers", targetId: "payments" },
+  ]
+
+  const offerCard: Cards[] = [
+    {
+      amount: "₹1,500",
+      title: "LONGSTAY",
+      description: "15% off when you book for 5 days or more and 20% off when you book for 30 days or more.",
+      link: "/offers/longstay",
+      color: "#C46D3B",
+      isCollect: true
+    },
+    {
+      amount: "₹3,000",
+      title: "EARLYBIRD",
+      description: "15% off when you book for 5 days or more and 20% off when you book for 30 days or more.",
+      link: "/offers/longstay",
+      color: "#C46D3B",
+      isCollect: true
+    },
+    {
+      amount: "Flat 10%",
+      title: "RUSHDEAL",
+      description: "15% off when you book for 5 days or more and 20% off when you book for 30 days or more.",
+      link: "/offers/longstay",
+      color: "#C46D3B",
+      isCollect: true
+    }
+  ]
+
+  const GiftCards: Cards[] = [
+    {
+      amount: "₹1000",
+      title: "Assured vouchers up to",
+      description: "of trending brands",
+      color: "#C46D3B",
+      link: "",
+      logo: "./gift1.png",
+      isCollect: true
+    },
+    {
+      amount: "upto 15% Off",
+      title: "Save more on your bookings",
+      description: "on select payment methods",
+      color: "#C46D3B",
+      link: "",
+      logo: "./gift2.png",
+      isCollect: true
+    },
+  ]
+
+  const GiftCards1: Cards[] = [
+    {
+      amount: "₹1500",
+      title: "MYNTRA",
+      logo: "./mintra.svg",
+      isCollect: true,
+      color: "#D41C9B",
+      description: "Get this gift voucher on booking above ₹2000",
+      link: "/"
+    },
+    {
+      amount: "₹1000",
+      title: "HAMMER",
+      logo: "./hammer.svg",
+      isCollect: true,
+      color: "#000000",
+      description: "Get this gift voucher on booking above ₹1500",
+      link: "/"
+    }
+  ]
+
+  const payments: Cards[] = [
+    {
+      amount: "10% Off",
+      title: "HDFC BANK",
+      logo: "./hdfc.svg",
+      isCollect: false,
+      color: "#3168CF",
+      description: "Get 10% off on booking above ₹1500",
+      link: "/",
+      isEvent: false
+    },
+    {
+      amount: "10% Off",
+      title: "HDFC BANK",
+      logo: "./hdfc.svg",
+      isCollect: false,
+      color: "#3168CF",
+      description: "Get 10% off on booking above ₹1500",
+      link: "/",
+      isEvent: false
+    }
+  ]
+
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+
+    const handleScroll = () => {
+      setIsScrolled(el.scrollTop > 0)
+    }
+
+    el.addEventListener("scroll", handleScroll)
+    return () => el.removeEventListener("scroll", handleScroll)
+  }, [])
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="h-full flex flex-col overflow-hidden">
+      <div className="sticky top-0 z-40 bg-background">
+        <div className="p-4 flex flex-col gap-2">
+          <h1 className="text-text font-bold text-2xl">Offer</h1>
+          <p className="text-sm text-muted font-light">
+            Book directly with us to get exclusive benefits
           </p>
+          <Button className="mt-2 rounded w-full">Sign in</Button>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </div>
+      <div
+        className={`sticky top-33 z-30 bg-background transition-shadow ${isScrolled ? "shadow-md" : ""}`}
+      >
+        <Tabs tabs={tabs} offset={180} />
+      </div>
+
+      <div
+        ref={scrollRef}
+        className="overflow-y-auto px-4"
+      >
+        <div>
+          <Wrapper
+            title="Sitewide coupons:"
+            clasName="flex flex-col gap-2"
+            id="coupons"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            {offerCard.map((item, index) => (
+              <Card
+                key={index}
+                amount={item.amount}
+                color={item.color}
+                description={item.description}
+                link={item.link}
+                title={item.title}
+                isCollect={item.isCollect}
+                logo={item.logo}
+              />
+            ))}
+          </Wrapper>
         </div>
-      </main>
+        <div>
+          <Wrapper
+            title="Bonus gift cards:"
+            clasName="flex flex-col gap-8"
+            id="giftcards"
+          >
+            {GiftCards.map((item, index) => (
+              <Giftcard
+                key={index}
+                amount={item.amount}
+                color={item.color}
+                description={item.description}
+                link={item.link}
+                title={item.title}
+                isCollect={item.isCollect}
+                logo={item.logo}
+              />
+            ))}
+          </Wrapper>
+        </div>
+        <div>
+          <Wrapper
+            title="Bonus gift cards:"
+            subTitle="Collect multiple of these"
+            id="giftcards"
+            clasName="flex flex-col gap-4"
+          >
+            {GiftCards1.map((item, index) => (
+              <Card
+                key={index}
+                amount={item.amount}
+                color={item.color}
+                description={item.description}
+                link={item.link}
+                title={item.title}
+                isCollect={item.isCollect}
+                logo={item.logo}
+              />
+            ))}
+          </Wrapper>
+        </div>
+        <div>
+          <Wrapper
+            title="Bonus gift cards:"
+            subTitle="Collect multiple of these"
+            id="payments"
+            clasName="flex flex-col gap-4"
+          >
+            {payments.map((item, index) => (
+              <Card
+                key={index}
+                amount={item.amount}
+                color={item.color}
+                description={item.description}
+                link={item.link}
+                title={item.title}
+                isCollect={item.isCollect}
+                logo={item.logo}
+                isEvent={item.isEvent}
+              />
+            ))}
+          </Wrapper>
+        </div>
+      </div>
     </div>
-  );
+  )
 }
