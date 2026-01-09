@@ -47,7 +47,7 @@ const Navbar = () => {
     ]
 
     return (
-        <nav className="w-full border-t border-border/20 bg-background">
+<nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/20 bg-background md:static">
             <ul className="flex items-center justify-around py-3">
                 {navbarItems.map((item: NavbarItem) => {
                     const Icon = item.icon
